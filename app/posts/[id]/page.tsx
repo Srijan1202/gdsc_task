@@ -13,6 +13,7 @@ interface PostPageProps {
 
 export default async function PostPage({ params }: PostPageProps) {
   const isAuthenticated = await getAuthStatus()
+  console.log(isAuthenticated)
 
   if (!isAuthenticated) {
     redirect("/login")
