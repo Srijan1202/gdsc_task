@@ -7,6 +7,7 @@ import { useRouter } from "next/navigation"
 import Link from "next/link"
 import { signInWithEmailAndPassword } from "firebase/auth"
 import { auth } from "@/lib/firebase"
+import { setSessionCookie } from "@/lib/auth"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card"
@@ -25,7 +26,17 @@ export default function LoginPage() {
     setError("")
 
     try {
-      await signInWithEmailAndPassword(auth, email, password)
+      // Sign in with Firebase
+      const userCredential = await signInWithEmailAndPassword(auth, email, password)
+
+      // Get the ID token
+      const token = await userCredential.user.getIdToken()
+
+      // Set the session cookie using our server action
+      await setSessionCookie(token)
+
+      // Refresh the router to update authentication state
+      router.refresh()
       router.push("/")
     } catch (error: any) {
       setError(error.message || "Failed to login. Please try again.")
