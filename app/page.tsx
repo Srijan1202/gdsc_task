@@ -2,29 +2,26 @@ import { PostFeed } from "@/components/post-feed"
 
 async function getPosts() {
   try {
-    const res = await fetch("https://dummyjson.com/posts?limit=100", {
-      next: { revalidate: 3600 },
+    // Replace with your actual API endpoint
+    const res = await fetch("https://your-api.com/posts", {
+      next: { revalidate: 3600 }, // Cache for 1 hour
     })
 
     if (!res.ok) {
-      console.error("Error fetching posts. Status:", res.status)
-      return []
+      throw new Error("Failed to fetch posts")
     }
 
     const data = await res.json()
 
-    if (!data.posts) {
-      console.error("Invalid response structure:", data)
-      return []
-    }
-
-    return data.posts.map((post: any) => ({
+    // Ensure each post has a valid createdAt field
+    return data.map((post: any) => ({
       ...post,
+      // If createdAt is missing or invalid, use current date
       createdAt: post.createdAt || new Date().toISOString(),
     }))
   } catch (error) {
     console.error("Error fetching posts:", error)
-    return []
+    return [] // Return empty array on error
   }
 }
 

@@ -28,15 +28,15 @@ export default async function PostDetail({ postId }: PostDetailProps) {
         <Link href={`/users/${post.userId}`} className="flex items-center gap-2">
           <Avatar>
             <AvatarImage
-              src={post.user?.image || `/placeholder.svg?height=40&width=40`}
-              alt={post.user?.username || "User"}
+              src={`https://robohash.org/${post.userId}`}
+              alt={`User ${post.userId}`}
             />
-            <AvatarFallback>{post.user?.username?.charAt(0) || "U"}</AvatarFallback>
+            <AvatarFallback>{`U${post.userId}`}</AvatarFallback>
           </Avatar>
           <div>
-            <p className="font-medium">{post.user?.username || "Anonymous"}</p>
+            <p className="font-medium">User {post.userId}</p>
             <p className="text-xs text-muted-foreground">
-              {formatDistanceToNow(new Date(post.createdAt), { addSuffix: true })}
+              {post.createdAt ? formatDistanceToNow(new Date(post.createdAt), { addSuffix: true }) : "Recently"}
             </p>
           </div>
         </Link>
@@ -47,7 +47,7 @@ export default async function PostDetail({ postId }: PostDetailProps) {
         <div className="flex flex-wrap gap-2 mb-4">
           {post.tags.map((tag) => (
             <Badge key={tag} variant="secondary">
-              {tag}
+              #{tag}
             </Badge>
           ))}
         </div>
@@ -56,11 +56,11 @@ export default async function PostDetail({ postId }: PostDetailProps) {
         <div className="flex items-center gap-4">
           <Button variant="outline" size="sm" className="flex items-center gap-2">
             <ThumbsUp className="h-4 w-4" />
-            <span>{post.likes}</span>
+            <span>{post.reactions}</span>
           </Button>
           <Button variant="outline" size="sm" className="flex items-center gap-2">
             <ThumbsDown className="h-4 w-4" />
-            <span>{post.dislikes || 0}</span>
+            <span>0</span>
           </Button>
         </div>
         <Button variant="outline" size="sm" className="flex items-center gap-2">
@@ -71,4 +71,3 @@ export default async function PostDetail({ postId }: PostDetailProps) {
     </Card>
   )
 }
-
