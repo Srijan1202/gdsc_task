@@ -1,9 +1,9 @@
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
-import PostCard from "@/components/post-card"
+import { PostCard } from "@/components/post-card"
 import { fetchPostsByUserId } from "@/lib/api"
 
 interface UserPostsProps {
-  userId: number
+  userId: string
 }
 
 export default async function UserPosts({ userId }: UserPostsProps) {

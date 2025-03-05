@@ -3,7 +3,7 @@ import { PostFeed } from "@/components/post-feed"
 async function getPosts() {
   try {
     // Replace with your actual API endpoint
-    const res = await fetch("https://your-api.com/posts", {
+    const res = await fetch("https://dummyjson.com/posts", {
       next: { revalidate: 3600 }, // Cache for 1 hour
     })
 
@@ -12,17 +12,12 @@ async function getPosts() {
     }
 
     const data = await res.json()
-
-    // Ensure each post has a valid createdAt field
-    return data.map((post: any) => ({
-      ...post,
-      // If createdAt is missing or invalid, use current date
-      createdAt: post.createdAt || new Date().toISOString(),
-    }))
-  } catch (error) {
-    console.error("Error fetching posts:", error)
-    return [] // Return empty array on error
-  }
+      return data.posts
+    } catch (error) {
+      console.error(error)
+      return []
+    }
+   
 }
 
 export default async function Home() {

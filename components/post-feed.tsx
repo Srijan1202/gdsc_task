@@ -1,4 +1,5 @@
 import { PostCard } from "./post-card"
+
 import type { Post } from "@/lib/types"
 
 interface PostFeedProps {

@@ -55,7 +55,7 @@ export function PostCard({ post }: PostCardProps) {
         <div className="flex gap-4">
           <Button variant="ghost" size="sm" className="gap-1">
             <ThumbsUp className="h-4 w-4" />
-            <span>{post.reactions}</span>
+            {/* <span>{post.reactions}</span> */}
           </Button>
           <Button variant="ghost" size="sm" className="gap-1">
             <MessageSquare className="h-4 w-4" />
