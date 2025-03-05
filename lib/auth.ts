@@ -1,11 +1,10 @@
 import { cookies } from "next/headers"
 
 export async function getAuthStatus() {
-  const cookieStore = await cookies(); // Await the cookies() call
-  const sessionCookie = cookieStore.get("session");
+  const cookieStore = await cookies(); // Await here
+  const sessionCookie = await cookieStore.get("session"); // Await here too
 
-  // This is a simplified check - in a real app, you would verify the session token
-  // with Firebase Admin SDK on the server
-  return !!sessionCookie
+  console.log("Session cookie:", sessionCookie); // Debugging log
+
+  return !!sessionCookie; // Convert to boolean
 }
-
